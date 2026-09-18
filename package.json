@@ -1,0 +1,28 @@
+{
+  "name": "@barry-bags/lists",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lists with items — create, view, add and delete",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "scripts": {
+    "dev": "tsx --watch server/src/index.ts",
+    "start": "tsx server/src/index.ts",
+    "start:prod": "node --import tsx server/src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@barry-rocks/bags": "link:../../barry/packages/bags",
+    "@barry-rocks/tools": "link:../../barry/packages/tools",
+    "better-sqlite3": "12.10.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "22.15.0",
+    "tsx": "4.19.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0"
+  }
+}

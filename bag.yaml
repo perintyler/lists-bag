@@ -1,0 +1,55 @@
+version: v0.1
+name: lists
+description: >-
+  Lists with items — create a list, add to it, check things off, delete them.
+  Owns a SQLite store and one service the three surfaces share: a web app, an
+  iOS app, and the MCP tools.
+
+tools:
+  entry: tools.ts
+
+services:
+  web:
+    description: Lists web app and API — the one write path for every surface
+    command: pnpm
+    args: ["exec", "tsx", "server/src/index.ts"]
+    working-directory: .
+    port: 4885
+    health: /health
+    # Reachable from a phone. The listener stays bound to loopback; Caddy
+    # terminates on the tailnet and proxies here, which is how every other bag
+    # is exposed (see questions, plans, metrics). A raw service port is NOT
+    # reachable from a phone — bags/point-guard-ios points at one and its
+    # device path has never worked.
+    host: lists.barry.lan
+    # Published through the shared cloudflared tunnel as well, so the web app
+    # works away from the tailnet. The origin has no auth of its own beyond
+    # BARRY_SECRET, so the Cloudflare Access application "Barry Lists"
+    # (cloudflare_zero_trust_access_application.barry_lists in
+    # bags/cloudflare/infra/access.tf) is the gate between the internet and
+    # this store, and MUST be applied before this hostname resolves.
+    tunnel:
+      hostname: lists.barry.rocks
+    run-at-load: true
+    keep-alive: true
+    env:
+      # The service is the only writer the app and the web page can reach, so
+      # it must come up with the same secret they send. Listed here means
+      # REQUIRED: a doctor run flags it if a barry has not bound it.
+      - BARRY_SECRET
+
+apps:
+  ListsiOS:
+    description: Create and edit lists from a phone
+    platform: ios
+    project: lists-ios
+    scheme: Lists
+    bundle-id: rocks.barry.lists.app
+    # No paid-only entitlements (no app groups, push, or keychain sharing), so
+    # a free personal team can sign this for a device. The cost is that it
+    # cannot receive a push: it only shows a list while it is open.
+    device: true
+
+# No `traits:` block. The auto-trait `lists` already grants readwrite over this
+# bag's namespace, and redeclaring the name here would replace it rather than
+# refine it — see the same note in bags/questions.

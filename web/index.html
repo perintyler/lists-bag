@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lists</title>
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app-header">
+        <h1>Lists</h1>
+        <form id="new-list" class="new-list">
+          <input
+            id="new-list-title"
+            type="text"
+            placeholder="New list…"
+            autocomplete="off"
+            aria-label="New list title"
+          />
+          <button type="submit">Add</button>
+        </form>
+      </header>
+
+      <div class="columns">
+        <nav class="sidebar" aria-label="Lists">
+          <ul id="lists" class="lists"></ul>
+          <p id="lists-empty" class="empty" hidden>No lists yet.</p>
+        </nav>
+
+        <section id="detail" class="detail" aria-live="polite">
+          <p class="empty">Select a list.</p>
+        </section>
+      </div>
+
+      <p id="status" class="status" role="status"></p>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
