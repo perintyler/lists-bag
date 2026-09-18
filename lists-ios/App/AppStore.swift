@@ -101,14 +101,6 @@ final class AppStore: ObservableObject {
         }
     }
 
-    func testConnection() async -> String {
-        do {
-            return try await client.health() ? "Connected." : "Server answered, but not OK."
-        } catch {
-            return describe(error)
-        }
-    }
-
     /// Turn a URLError into something that names the likely cause. "The
     /// operation couldn't be completed" tells the reader nothing about which
     /// of the two hosts is wrong.
