@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Lists with items — create, view, add and delete",
+  "description": "Lists with items \u2014 create, view, add and delete",
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "dev": "tsx --watch server/src/index.ts",
@@ -13,8 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@barry-rocks/bags": "link:../../barry/packages/bags",
-    "@barry-rocks/sdk-bags": "link:../../barry/sdk/bags",
+    "@barry-rocks/sdk": "link:../../barry/sdk/lib",
     "better-sqlite3": "12.10.0",
     "zod": "3.25.76"
   },
