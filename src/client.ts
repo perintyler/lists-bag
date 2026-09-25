@@ -1,4 +1,4 @@
-import { findBagResourceUrl } from "@barry-rocks/sdk/host";
+import { bagServiceUrl } from "@barry-rocks/sdk/host";
 
 const DEFAULT_PORT = 4885;
 
@@ -9,8 +9,10 @@ const DEFAULT_PORT = 4885;
  * port stays declared in this bag's manifest and core needs no entry for it.
  */
 function baseUrl(): string {
-  if (process.env.LISTS_SERVICE_URL) return process.env.LISTS_SERVICE_URL;
-  return findBagResourceUrl("lists", "web") ?? `http://127.0.0.1:${DEFAULT_PORT}`;
+  return bagServiceUrl("lists", "web", {
+    override: process.env.LISTS_SERVICE_URL,
+    fallback: `http://127.0.0.1:${DEFAULT_PORT}`,
+  });
 }
 
 /**
